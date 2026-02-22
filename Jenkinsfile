@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        stage('Pull Latest Code') {
+        stage('Pull Code') {
             steps {
                 checkout scm
             }
@@ -11,17 +11,13 @@ pipeline {
 
         stage('Stop Old App') {
             steps {
-                sh '''
-                pkill -f app.py || true
-                '''
+                sh 'pkill -f app.py || true'
             }
         }
 
         stage('Start App') {
             steps {
-                sh '''
-                nohup python3 app.py > output.log 2>&1 &
-                '''
+                sh 'nohup python3 app.py > output.log 2>&1 &'
             }
         }
     }
