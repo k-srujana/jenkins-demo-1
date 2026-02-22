@@ -11,13 +11,17 @@ pipeline {
 
         stage('Stop Old App') {
             steps {
-                sh 'pkill -f app.py || true'
+                bat '''
+                taskkill /F /IM python.exe >nul 2>&1 || exit 0
+                '''
             }
         }
 
         stage('Start App') {
             steps {
-                sh 'nohup python3 app.py > output.log 2>&1 &'
+                bat '''
+                start /B python app.py > output.log 2>&1
+                '''
             }
         }
     }
